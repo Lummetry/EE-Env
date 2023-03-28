@@ -4,6 +4,8 @@ WORKDIR /exe_eng
 
 COPY . /exe_eng
 
+RUN apt-get update && apt-get install -y iputils-ping
+
 RUN conda install seaborn pandas shapely scikit-learn scikit-image dropbox pymssql h5py unidecode
 RUN conda install -c conda-forge "ffmpeg>=5"
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
