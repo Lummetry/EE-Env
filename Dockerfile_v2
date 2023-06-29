@@ -13,4 +13,4 @@ RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 # set a generic env variable 
 ENV AIXP_DOCKER Yes
-ENV AIXP_ENV v0.3.0
+ENV AIXP_ENV v2.0.1
