@@ -18,3 +18,4 @@ requests_toolbelt
 minio
 backports-zoneinfo
 cryptography
+transformers
