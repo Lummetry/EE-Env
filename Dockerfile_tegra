@@ -1,0 +1,20 @@
+FROM nvcr.io/nvidia/l4t-pytorch:r35.2.1-pth2.0-py3
+
+RUN git clone git://source.ffmpeg.org/ffmpeg.git
+
+WORKDIR /ffmpeg
+
+RUN ./configure
+
+RUN make
+
+RUN make install
+
+WORKDIR /exe_eng
+
+COPY . /exe_eng
+
+RUN pip install --no-cache-dir --upgrade -r requirements_tegra.txt
+
+# set a generic env variable 
+ENV AIXP_DOCKER Yes
