@@ -19,3 +19,4 @@ minio
 backports-zoneinfo
 cryptography
 transformers
+accelerate

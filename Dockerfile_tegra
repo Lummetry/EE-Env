@@ -18,3 +18,4 @@ RUN pip install --no-cache-dir --upgrade -r requirements_tegra.txt
 
 # set a generic env variable 
 ENV AIXP_DOCKER Yes
+ENV AIXP_ENV v2.0.1-tegra-p03

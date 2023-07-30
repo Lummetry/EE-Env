@@ -6,3 +6,4 @@ minio
 gql
 opencv-python-headless
 decord
+accelerate
