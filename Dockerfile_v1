@@ -6,11 +6,12 @@ COPY . /exe_eng
 
 RUN apt-get update && apt-get install -y iputils-ping
 
-RUN conda install transformers seaborn pandas shapely scikit-learn scikit-image dropbox pymssql h5py unidecode
+RUN conda install -c huggingface transformers
+RUN conda install seaborn pandas shapely scikit-learn scikit-image dropbox pymssql h5py unidecode
 RUN conda install -c conda-forge "ffmpeg>=5"
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 
 # set a generic env variable 
 ENV AIXP_DOCKER Yes
-ENV AIXP_ENV v1.13.1-cuda11.6-cudnn8-p03
+ENV AIXP_ENV v1.13.1-cuda11.6-cudnn8-4
