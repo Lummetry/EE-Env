@@ -1,6 +1,5 @@
 FROM pytorch/pytorch
 
-
 WORKDIR /exe_eng
 
 COPY . /exe_eng

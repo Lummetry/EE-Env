@@ -21,3 +21,4 @@ cryptography
 transformers
 accelerate
 bitsandbytes
+tokenizers==0.13.3

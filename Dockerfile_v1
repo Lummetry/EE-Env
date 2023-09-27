@@ -11,7 +11,6 @@ RUN conda install seaborn pandas shapely scikit-learn scikit-image dropbox pymss
 RUN conda install -c conda-forge "ffmpeg>=5"
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
-
 # set a generic env variable 
 ENV AIXP_DOCKER Yes
 ENV AIXP_ENV v0.4-1.13.1-c11.6-cdn8
