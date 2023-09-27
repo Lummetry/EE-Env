@@ -7,3 +7,4 @@ gql
 opencv-python-headless
 decord
 accelerate
+bitsandbytes
