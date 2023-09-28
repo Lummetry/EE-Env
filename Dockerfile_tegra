@@ -16,6 +16,12 @@ COPY . /exe_eng
 
 RUN pip install --no-cache-dir --upgrade -r requirements_tegra.txt
 
+# Install tzdata if it's not available in your base image. 
+RUN apt-get update && apt-get install -y tzdata nano vim
+
+# Use the TZ variable to set the timezone
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 # set a generic env variable 
 ENV AIXP_DOCKER Yes
 ENV AIXP_ENV v0.4-2.0.1-tegra
