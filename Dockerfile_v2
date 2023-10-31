@@ -22,4 +22,4 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # set a generic env variable 
 ENV AIXP_DOCKER Yes
-ENV AIXP_ENV v0.5-2.1
+ENV AIXP_ENV v0.7-2.1
