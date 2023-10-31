@@ -4,22 +4,24 @@ WORKDIR /exe_eng
 
 COPY . /exe_eng
 
-RUN apt-get update && apt-get install -y iputils-ping
-
 RUN conda install -c huggingface transformers
+
 RUN conda install seaborn pandas shapely scikit-learn scikit-image dropbox pymssql h5py unidecode
 RUN conda install -c conda-forge "ffmpeg>=5"
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
+
 # Set a default value for the TZ environment variable
 ENV TZ=Europe/Bucharest
 
+# install ip-utils for debugging connection
+RUN apt-get update && apt-get install -y iputils-ping
 # Install tzdata if it's not available in your base image. 
 RUN apt-get update && apt-get install -y tzdata nano vim
-
 # Use the TZ variable to set the timezone
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+
 # set a generic env variable 
 ENV AIXP_DOCKER Yes
-ENV AIXP_ENV v0.7-2.1
+ENV AIXP_ENV v0.8-2.1
