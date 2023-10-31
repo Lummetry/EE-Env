@@ -1,15 +1,13 @@
 FROM pytorch/pytorch
 
-WORKDIR /exe_eng
-
-COPY . /exe_eng
-
 RUN conda install -c huggingface transformers
-
 RUN conda install seaborn pandas shapely scikit-learn scikit-image dropbox pymssql h5py unidecode
 RUN conda install -c conda-forge "ffmpeg>=5"
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
+
+WORKDIR /exe_eng
+COPY . /exe_eng
 
 # Set a default value for the TZ environment variable
 ENV TZ=Europe/Bucharest
