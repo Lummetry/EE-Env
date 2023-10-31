@@ -1,6 +1,6 @@
 FROM pytorch/pytorch
 
-RUN conda install -c conda-forge transformers
+RUN conda install -c conda-forge "transformers>=4.34.0"
 RUN conda install seaborn pandas shapely scikit-learn scikit-image dropbox pymssql h5py unidecode
 RUN conda install -c conda-forge "ffmpeg>=5"
 
