@@ -10,9 +10,8 @@ RUN make
 
 RUN make install
 
-WORKDIR /exe_eng
-
-COPY . /exe_eng
+WORKDIR /exe_eng_base
+COPY . /exe_eng_base
 
 RUN pip install --no-cache-dir --upgrade -r requirements_tegra.txt
 

@@ -5,8 +5,8 @@ RUN conda install seaborn pandas shapely scikit-learn scikit-image dropbox pymss
 RUN conda install -c conda-forge "ffmpeg>=5"
 
 
-WORKDIR /exe_eng
-COPY . /exe_eng
+WORKDIR /exe_eng_base
+COPY . /exe_eng_base
 
 # after copy run requirements
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
