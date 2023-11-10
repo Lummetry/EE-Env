@@ -23,7 +23,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./raspberry/
           platforms: linux/arm64
           push: true
           tags: aixpand/exe_eng_pub:aarch64-rpi
