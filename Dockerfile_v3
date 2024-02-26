@@ -1,8 +1,22 @@
 FROM aixpand/exe_eng_pub:x64_env_v2
 
-RUN python3 -m pip install --upgrade pip wheel && \
-  pip install --no-cache tensorrt --extra-index-url https://pypi.nvidia.com && \
-  pip install --no-cache onnx onnxsim
+COPY scripts/trt-relink.sh /tmp
 
-ENV AIXP_ENV=v1.1-3.0
+# Install TensorRT, onnx and onnxsim. The TensorRT install pulls in
+# cudnn and cublas packages from nvidia, however we already have these
+# from torch. All DSOs will be on the dynamic loaders path and what version
+# of libraries we will pick at runtime depends strictly on the user
+# application. That is if we do a torch call first (e.g. create a torch device)
+# we'll get the torch flavours and doing a TensorRT call loads the TensorRT libraries
+# (i.e. what matters is the order in which we do the dlopen calls).
+# Since the library versions are all the same this _happens_ to work,
+# but also means that the nvidia cudnn/cublas libararies are technically not
+# needed. We'll remove these and add a symlink to the libraries from torch.
+# FIXME: we don't need to do this manually, we should have a script
+# that follows the rpath from TensorRT libraries to discover these.
+RUN  pip install --no-cache-dir tensorrt --extra-index-url https://pypi.nvidia.com && \
+  pip install --no-cache-dir onnx onnxsim && \
+  bash /tmp/trt-relink.sh 2>&1 > /tmp/log.txt && \
+  rm /tmp/trt-relink.sh
+ENV AIXP_ENV=v1.1-3.1
 
