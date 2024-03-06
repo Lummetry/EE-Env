@@ -1,0 +1,57 @@
+FROM nvidia/cuda:12.3.2-base-ubuntu20.04
+
+COPY requirements_v4.txt /tmp/requirements.txt
+COPY scripts/build-ffmpeg.sh /tmp/build-ffmpeg.sh
+WORKDIR /tmp
+
+# Set a default value for the TZ environment variable
+ENV TZ=Europe/Bucharest
+
+# Note we're leaving build-essential behind because torch compile
+# needs a system compiler.
+
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends software-properties-common && \
+  add-apt-repository ppa:deadsnakes/ppa && \
+  apt-get update && \
+  apt-get install -y --no-install-recommends \
+    tzdata \
+    nano && \
+  ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
+  apt-get install -y --no-install-recommends \
+    python3.10 \
+    python3.10-venv && \
+  cd /opt && python3.10 -m venv venv && \
+  . /opt/venv/bin/activate && \
+  cd /tmp && \
+  pip install --no-cache-dir -r /tmp/requirements.txt && \
+  pip install --no-cache-dir tensorrt --extra-index-url https://pypi.nvidia.com && \
+  pip install --no-cache-dir \
+    onnx \
+    onnxsim && \
+  apt-get install -y --no-install-recommends \
+    wget \
+    build-essential \
+    curl \
+    git \
+    nasm \
+    cmake \
+    pkg-config \
+    ninja-build && \
+  pip install --no-cache-dir meson && \
+  bash build-ffmpeg.sh && \
+  apt-get purge -y curl cmake wget git ninja-build && \
+  apt-get -y autoremove && \
+  apt-get -y autoclean && \
+  rm -rf /var/lib/apt/lists/* && \
+  pip uninstall -y meson
+
+# Use the created venv by default
+ENV PATH="/opt/venv/bin:$PATH"
+# Make sure we look for shared objects in /usr/local/lib
+ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib"
+
+# Set up workdir and the various env variables.
+WORKDIR /exe_eng_base
+ENV AIXP_DOCKER Yes
+ENV AIXP_ENV=v1.1-4.0
